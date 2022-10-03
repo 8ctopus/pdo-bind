@@ -1,0 +1,26 @@
+{
+    "name": "8ctopus/pdo-fix",
+    "type": "library",
+    "description": "Fix PDO execute not working with binaries",
+    "keywords": ["PDO", "String data, right truncated: 1406 Data too long for column"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "8ctopus",
+            "email": "hello@octopuslabs.io"
+        }
+    ],
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "nunomaduro/collision": "^6.2",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Oct8pus\\PDOFix\\": "src"
+        }
+    }
+}
