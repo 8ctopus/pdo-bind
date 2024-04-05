@@ -17,11 +17,6 @@ class PDOStatementWrap
         $this->statement = $statement;
     }
 
-    public function __call(string $method, array $args) : mixed
-    {
-        return $this->statement->{$method}(...$args);
-    }
-
     public function execute(?array $params = null) : bool
     {
         if ($params) {
@@ -33,8 +28,13 @@ class PDOStatementWrap
         return $this->statement->execute();
     }
 
+    public function __call(string $method, array $args) : mixed
+    {
+        return $this->statement->{$method}(...$args);
+    }
+
     /**
-     * Variable to PDO type
+     * Value to PDO type
      *
      * @param mixed $value
      *

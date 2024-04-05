@@ -15,7 +15,7 @@ class PDOWrap
         $this->pdo = new PDO($dsn, $username, $password, $options);
     }
 
-    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
+    public function prepare(string $query, array $options = []) : PDOStatementWrap|false
     {
         $result = $this->pdo->prepare($query, $options);
 
@@ -26,7 +26,7 @@ class PDOWrap
         return new PDOStatementWrap($result);
     }
 
-    public function query(string $query, ...$vars) : false|PDOStatementWrap
+    public function query(string $query, ...$vars) : PDOStatementWrap|false
     {
         $result = $this->pdo->query($query, ...$vars);
 
