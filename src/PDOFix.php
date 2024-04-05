@@ -6,6 +6,20 @@ use Exception;
 use PDO;
 use PDOStatement;
 
+class PDOFix extends PDO
+{
+    public function prepare(string $query, array $options = []) : PDOStatementFix|false
+    {
+        $result = parent::prepare($query, $options);
+
+        if (!$result) {
+            return false;
+        }
+
+        return new PDOStatementFix($result);
+    }
+}
+
 class PDOStatementFix extends PDOStatement
 {
     private PDOStatement $statement;
@@ -27,9 +41,9 @@ class PDOStatementFix extends PDOStatement
         return $this->statement->execute();
     }
 
-    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0): mixed
+    public function __call(string $method, array $args) : mixed
     {
-        return $this->statement->fetch($mode, $cursorOrientation, $cursorOffset);
+        return $this->statement->{$method}($args);
     }
 
     /**
@@ -57,19 +71,5 @@ class PDOStatementFix extends PDOStatement
             default:
                 throw new Exception("unsupported type - {$type}");
         }
-    }
-}
-
-class PDOFix extends PDO
-{
-    public function prepare(string $query, array $options = []) : PDOStatementFix|false
-    {
-        $result = parent::prepare($query, $options);
-
-        if (!$result) {
-            return false;
-        }
-
-        return new PDOStatementFix($result);
     }
 }
