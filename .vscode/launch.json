@@ -33,22 +33,6 @@
       "cwd": "${fileDirname}",
       "port": 9000,
       "stopOnEntry": true
-    },
-    {
-      "name": "js attach",
-      "type": "chrome",
-      "request": "attach",
-      "url": "https://localhost",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}/html"
-    },
-    {
-      "name": "js launch",
-      "type": "chrome",
-      "request": "launch",
-      "url": "https://localhost",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}/html"
     }
   ]
 }
