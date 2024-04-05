@@ -12,12 +12,7 @@ class PDOWrap
 
     public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
     {
-        $this->pdo = new PDO($dsn, $username, $password);
-    }
-
-    public function __call(string $method, array $args) : mixed
-    {
-        return $this->pdo->{$method}(...$args);
+        $this->pdo = new PDO($dsn, $username, $password, $options);
     }
 
     public function prepare(string $query, array $options = []) : false|PDOStatementWrap
@@ -29,5 +24,21 @@ class PDOWrap
         }
 
         return new PDOStatementWrap($result);
+    }
+
+    public function query(string $query, ...$vars) : false|PDOStatementWrap
+    {
+        $result = $this->pdo->query($query, ...$vars);
+
+        if (!$result) {
+            return false;
+        }
+
+        return new PDOStatementWrap($result);
+    }
+
+    public function __call(string $method, array $args) : mixed
+    {
+        return $this->pdo->{$method}(...$args);
     }
 }
