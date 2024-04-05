@@ -20,7 +20,7 @@ $db = new PDOWrap('sqlite::memory:', null, null, [
 
 $sql = <<<'SQL'
 CREATE TABLE `test` (
-    `id` INT PRIMARY KEY,
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
     `birthday` DATE NOT NULL,
     `name` VARCHAR(40) NOT NULL,
     `salary` INT NOT NULL,
@@ -44,19 +44,19 @@ $staff = [
     [
         'birthday' => (new DateTime('1995-05-01'))->format('Y-m-d'),
         'name' => 'Sharon',
-        'salary' => '200',
+        'salary' => 200,
         'boss' => true,
     ],
     [
         'birthday' => (new DateTime('2000-01-01'))->format('Y-m-d'),
         'name' => 'John',
-        'salary' => '140',
+        'salary' => 140,
         'boss' => false,
     ],
     [
         'birthday' => (new DateTime('1985-08-01'))->format('Y-m-d'),
         'name' => 'Oliver',
-        'salary' => '120',
+        'salary' => 120,
         'boss' => false,
     ],
 ];
@@ -67,7 +67,7 @@ foreach ($staff as $member) {
 
 $sql = <<<'SQL'
 SELECT
-    *
+    `birthday`, `name`, `salary`, `boss`
 FROM
     `test`
 SQL;
