@@ -43,17 +43,17 @@ class PDOStatementWrap
     private function typeToParam(mixed $value) : int
     {
         switch ($type = gettype($value)) {
-            case 'boolean':
-                return PDO::PARAM_BOOL;
+            case 'string':
+                return PDO::PARAM_STR;
 
             case 'integer':
                 return PDO::PARAM_INT;
 
+            case 'boolean':
+                return PDO::PARAM_BOOL;
+
             case 'NULL':
                 return PDO::PARAM_NULL;
-
-            case 'string':
-                return PDO::PARAM_STR;
 
             default:
                 throw new Exception("unsupported type - {$type}");
