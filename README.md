@@ -1,8 +1,8 @@
-# PDO Fix
+# PDOWrap
 
-Fix PDO issue with binaries
+Fix PDO issue with binary data
 
-[![Latest Stable Version](http://poser.pugx.org/8ctopus/pdo-fix/v)](https://packagist.org/packages/8ctopus/pdo-fix) [![Total Downloads](http://poser.pugx.org/8ctopus/pdo-fix/downloads)](https://packagist.org/packages/8ctopus/pdo-fix) [![License](http://poser.pugx.org/8ctopus/pdo-fix/license)](https://packagist.org/packages/8ctopus/pdo-fix) [![PHP Version Require](http://poser.pugx.org/8ctopus/pdo-fix/require/php)](https://packagist.org/packages/8ctopus/pdo-fix)
+[![Latest Stable Version](http://poser.pugx.org/8ctopus/pdo-wrap/v)](https://packagist.org/packages/8ctopus/pdo-wrap) [![Total Downloads](http://poser.pugx.org/8ctopus/pdo-wrap/downloads)](https://packagist.org/packages/8ctopus/pdo-wrap) [![License](http://poser.pugx.org/8ctopus/pdo-wrap/license)](https://packagist.org/packages/8ctopus/pdo-wrap) [![PHP Version Require](http://poser.pugx.org/8ctopus/pdo-wrap/require/php)](https://packagist.org/packages/8ctopus/pdo-wrap)
 
 ## features
 
@@ -10,17 +10,11 @@ Fix PDO issue with binaries
 ## install and demo
 
 ```sh
-composer require 8ctopus/pdo-fix
+composer require 8ctopus/pdo-wrap
 ```
 
 ## tests
 
 ```sh
-vendor/bin/phpunit --coverage-html coverage
-```
-
-## clean code
-
-```sh
-vendor/bin/php-cs-fixer fix
+composer test
 ```
