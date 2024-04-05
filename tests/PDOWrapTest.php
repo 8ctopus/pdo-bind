@@ -34,7 +34,7 @@ final class PDOWrapTest extends TestCase
         self::assertTrue(true);
     }
 
-    public function testQuery() : void
+    public function testExec() : void
     {
         $sql = <<<'SQL'
         CREATE TABLE `test` (
@@ -46,12 +46,12 @@ final class PDOWrapTest extends TestCase
         )
         SQL;
 
-        self::$db->query($sql);
+        $result = self::$db->exec($sql);
 
-        self::assertTrue(true);
+        self::assertSame(0, $result);
     }
 
-    public function testPrepare() : void
+    public function testPrepareExecuteQuery() : void
     {
         $sql = <<<'SQL'
         INSERT INTO `test`
