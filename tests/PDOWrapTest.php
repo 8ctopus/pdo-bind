@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Oct8pus\PDOWrap;
 
@@ -9,16 +11,14 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \Oct8pus\PDOWrap\PDOWrap
  * @covers \Oct8pus\PDOWrap\PDOStatementWrap
+ * @covers \Oct8pus\PDOWrap\PDOWrap
  */
 final class PDOWrapTest extends TestCase
 {
     private static PDOWrap $db;
 
-    public static function setUpBeforeClass(): void
-    {
-    }
+    public static function setUpBeforeClass() : void {}
 
     public function testConstructor() : void
     {
