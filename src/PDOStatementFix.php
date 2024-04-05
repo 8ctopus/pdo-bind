@@ -8,7 +8,7 @@ use Exception;
 use PDO;
 use PDOStatement;
 
-class PDOStatementFix extends PDOStatement
+class PDOStatementFix
 {
     private PDOStatement $statement;
 
@@ -19,7 +19,7 @@ class PDOStatementFix extends PDOStatement
 
     public function __call(string $method, array $args) : mixed
     {
-        return $this->statement->{$method}($args);
+        return $this->statement->{$method}(...$args);
     }
 
     public function execute(?array $params = null) : bool
@@ -31,11 +31,6 @@ class PDOStatementFix extends PDOStatement
         }
 
         return $this->statement->execute();
-    }
-
-    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) : mixed
-    {
-        return $this->statement->fetch($mode, $cursorOrientation, $cursorOffset);
     }
 
     /**
