@@ -10,9 +10,9 @@ class PDOWrap
 {
     private PDO $pdo;
 
-    public function __construct(string $dsn, ?string $user, ?string $pass)
+    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
     {
-        $this->pdo = new PDO($dsn, $user, $pass);
+        $this->pdo = new PDO($dsn, $username, $password);
     }
 
     public function __call(string $method, array $args) : mixed
