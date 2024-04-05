@@ -1,8 +1,9 @@
 {
     "name": "8ctopus/pdo-wrap",
     "type": "library",
-    "description": "Fix PDO execute not working with binaries",
-    "keywords": ["PDO", "String data, right truncated: 1406 Data too long for column"],
+    "description": "Fix PDO not interpreting binary values",
+    "keywords": ["PDO", "binary", "String data, right truncated: 1406 Data too long for column"],
+    "homepage": "https://github.com/8ctopus/pdo-wrap",
     "license": "MIT",
     "authors": [
         {
