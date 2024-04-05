@@ -31,6 +31,11 @@ class PDOStatementFix extends PDOStatement
         return $this->statement->execute();
     }
 
+    public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) : mixed
+    {
+        return $this->statement->fetch($mode, $cursorOrientation, $cursorOffset);
+    }
+
     /**
      * Variable to PDO type
      *
