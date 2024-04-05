@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Oct8pus\\PDOFix\\": "src"
+            "Oct8pus\\PDOWrap\\": "src"
         }
     }
 }

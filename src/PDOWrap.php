@@ -6,7 +6,7 @@ use Exception;
 use PDO;
 use PDOStatement;
 
-class PDOFix extends PDO
+class PDOWrap extends PDO
 {
     public function prepare(string $query, array $options = []) : PDOStatementFix|false
     {
