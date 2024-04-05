@@ -1,20 +1,12 @@
 <?php
 
-use Oct8pus\PDOFix\PDOFix as PDO;
+use Oct8pus\PDOWrap\PDOWrap;
 
-require_once './vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
-// command line error handler
 (new \NunoMaduro\Collision\Provider())->register();
 
-$params = [
-    'host' => 'localhost',
-    'database' => 'test',
-    'user' => 'root',
-    'pass' => '123',
-];
-
-$db = new PDO("mysql:host={$params['host']};dbname={$params['database']};charset=utf8", $params['user'], $params['pass'], [
+$db = new PDOWrap("sqlite::memory:", null, null, [
     // use exceptions
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     // get arrays
@@ -24,29 +16,23 @@ $db = new PDO("mysql:host={$params['host']};dbname={$params['database']};charset
 ]);
 
 $sql = <<<SQL
-    DROP TABLE IF EXISTS test
+CREATE TABLE `test` (
+    `id` INT PRIMARY KEY,
+    `birthday` DATE NOT NULL,
+    `name` VARCHAR(40) NOT NULL,
+    `salary` INT NOT NULL,
+    `boss` BIT NOT NULL
+)
 SQL;
 
 $query = $db->prepare($sql);
 $query->execute();
 
 $sql = <<<SQL
-    CREATE TABLE test (
-        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        `birthday` DATE NOT NULL,
-        `name` VARCHAR(40) NOT NULL,
-        `salary` INT NOT NULL,
-        `boss` BIT NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-SQL;
-
-$query = $db->prepare($sql);
-$query->execute();
-
-$sql = <<<SQL
-    INSERT INTO test
-    (birthday, name, salary, boss)
-    VALUES (:birthday, :name, :salary, :boss)
+INSERT INTO `test`
+    (`birthday`, `name`, `salary`, `boss`)
+VALUES
+    (:birthday, :name, :salary, :boss)
 SQL;
 
 $query = $db->prepare($sql);
@@ -77,8 +63,10 @@ foreach ($staff as $member) {
 }
 
 $sql = <<<SQL
-    SELECT *
-    FROM test
+SELECT
+    *
+FROM
+    `test`
 SQL;
 
 $query = $db->prepare($sql);
