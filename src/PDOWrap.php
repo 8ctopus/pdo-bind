@@ -6,7 +6,7 @@ use PDO;
 
 class PDOWrap extends PDO
 {
-    public function prepare(string $query, array $options = []) : PDOStatementFix|false
+    public function prepare(string $query, array $options = []) : false|PDOStatementFix
     {
         $result = parent::prepare($query, $options);
 

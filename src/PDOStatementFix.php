@@ -15,27 +15,26 @@ class PDOStatementFix extends PDOStatement
         $this->statement = $statement;
     }
 
+    public function __call(string $method, array $args) : mixed
+    {
+        return $this->statement->{$method}($args);
+    }
+
     public function execute(?array $params = null) : bool
     {
         if ($params) {
             foreach ($params as $key => $value) {
                 $this->statement->bindValue($key, $value, $this->typeToParam($value));
             }
-
         }
 
         return $this->statement->execute();
     }
 
-    public function __call(string $method, array $args) : mixed
-    {
-        return $this->statement->{$method}($args);
-    }
-
     /**
      * Variable to PDO type
      *
-     * @param  mixed  $value
+     * @param mixed $value
      *
      * @return int PDO type
      */

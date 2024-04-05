@@ -1,12 +1,13 @@
 <?php
 
+use NunoMaduro\Collision\Provider;
 use Oct8pus\PDOWrap\PDOWrap;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-(new \NunoMaduro\Collision\Provider())->register();
+(new Provider())->register();
 
-$db = new PDOWrap("sqlite::memory:", null, null, [
+$db = new PDOWrap('sqlite::memory:', null, null, [
     // use exceptions
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     // get arrays
@@ -15,7 +16,7 @@ $db = new PDOWrap("sqlite::memory:", null, null, [
     PDO::ATTR_EMULATE_PREPARES => false,
 ]);
 
-$sql = <<<SQL
+$sql = <<<'SQL'
 CREATE TABLE `test` (
     `id` INT PRIMARY KEY,
     `birthday` DATE NOT NULL,
@@ -28,7 +29,7 @@ SQL;
 $query = $db->prepare($sql);
 $query->execute();
 
-$sql = <<<SQL
+$sql = <<<'SQL'
 INSERT INTO `test`
     (`birthday`, `name`, `salary`, `boss`)
 VALUES
@@ -62,7 +63,7 @@ foreach ($staff as $member) {
     $query->execute($member);
 }
 
-$sql = <<<SQL
+$sql = <<<'SQL'
 SELECT
     *
 FROM
