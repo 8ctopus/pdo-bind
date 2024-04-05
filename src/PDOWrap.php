@@ -20,7 +20,7 @@ class PDOWrap
         return $this->pdo->{$method}(...$args);
     }
 
-    public function prepare(string $query, array $options = []) : false|PDOStatementFix
+    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
     {
         $result = $this->pdo->prepare($query, $options);
 
@@ -28,6 +28,6 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementFix($result);
+        return new PDOStatementWrap($result);
     }
 }

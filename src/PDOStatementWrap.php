@@ -8,7 +8,7 @@ use Exception;
 use PDO;
 use PDOStatement;
 
-class PDOStatementFix
+class PDOStatementWrap
 {
     private PDOStatement $statement;
 
