@@ -12,16 +12,36 @@ class PDOStatementWrap
 {
     private PDOStatement $statement;
 
+    /**
+     * Constructor
+     *
+     * @param PDOStatement $statement
+     */
     public function __construct(PDOStatement $statement)
     {
         $this->statement = $statement;
     }
 
+    /**
+     * Call PDO method
+     *
+     * @param  string $method
+     * @param  array  $args
+     *
+     * @return mixed
+     */
     public function __call(string $method, array $args) : mixed
     {
         return $this->statement->{$method}(...$args);
     }
 
+    /**
+     * Override PDO execute method
+     *
+     * @param  array|null $params
+     *
+     * @return bool
+     */
     public function execute(?array $params = null) : bool
     {
         if ($params) {
