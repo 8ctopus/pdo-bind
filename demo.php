@@ -7,7 +7,8 @@ use Oct8pus\PDOWrap\PDOWrap;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-(new Provider())->register();
+(new Provider())
+    ->register();
 
 $db = new PDOWrap('sqlite::memory:', null, null, [
     // use exceptions
