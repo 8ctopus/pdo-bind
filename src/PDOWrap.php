@@ -8,19 +8,22 @@ use PDO;
 
 class PDOWrap
 {
-    private PDO $pdo;
+    private readonly PDO $pdo;
+    private readonly bool $convert;
 
     /**
      * Constructor
      *
-     * @param string      $dsn
-     * @param string|null $username
-     * @param string|null $password
-     * @param array|null  $options
+     * @param string  $dsn
+     * @param ?string $username
+     * @param ?string $password
+     * @param ?array  $options
+     * @param bool    $convert
      */
-    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
+    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null, bool $convert = false)
     {
         $this->pdo = new PDO($dsn, $username, $password, $options);
+        $this->convert = $convert;
     }
 
     /**
@@ -42,9 +45,9 @@ class PDOWrap
      * @param  string $query
      * @param  array  $options
      *
-     * @return PDOStatementWrapAdvanced|false
+     * @return PDOStatementWrap|false
      */
-    public function prepare(string $query, array $options = []) : false|PDOStatementWrapAdvanced
+    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
     {
         $result = $this->pdo->prepare($query, $options);
 
@@ -52,7 +55,7 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrapAdvanced($result);
+        return new PDOStatementWrap($result, $this->convert);
     }
 
     /**
@@ -61,9 +64,9 @@ class PDOWrap
      * @param  string $query
      * @param  [type] $vars
      *
-     * @return PDOStatementWrapAdvanced|false
+     * @return PDOStatementWrap|false
      */
-    public function query(string $query, ...$vars) : false|PDOStatementWrapAdvanced
+    public function query(string $query, ...$vars) : false|PDOStatementWrap
     {
         $result = $this->pdo->query($query, ...$vars);
 
@@ -71,6 +74,6 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrapAdvanced($result);
+        return new PDOStatementWrap($result, $this->convert);
     }
 }

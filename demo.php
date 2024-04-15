@@ -17,7 +17,7 @@ $db = new PDOWrap('sqlite::memory:', null, null, [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     // better prevention against SQL injections
     PDO::ATTR_EMULATE_PREPARES => false,
-]);
+], true);
 
 $sql = <<<'SQL'
 CREATE TABLE `test` (
@@ -77,6 +77,16 @@ $query = $db->prepare($sql);
 $query->execute();
 
 while ($row = $query->fetch()) {
+    $birthday = $row['birthday']->format('Y-m-d');
+    echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
+}
+
+$query = $db->prepare($sql);
+$query->execute();
+
+$rows = $query->fetchAll();
+
+foreach ($rows as $row) {
     $birthday = $row['birthday']->format('Y-m-d');
     echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
