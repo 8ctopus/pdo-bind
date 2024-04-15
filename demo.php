@@ -68,7 +68,7 @@ foreach ($staff as $member) {
 
 $sql = <<<'SQL'
 SELECT
-    `birthday`, `name`, `salary`, `boss`
+    `id`, `birthday`, `name`, `salary`, `boss`
 FROM
     `test`
 SQL;
@@ -77,5 +77,6 @@ $query = $db->prepare($sql);
 $query->execute();
 
 while ($row = $query->fetch()) {
-    echo "{$row['id']} {$row['birthday']} {$row['name']} {$row['salary']} {$row['boss']}\n";
+    $birthday = $row['birthday']->format('Y-m-d');
+    echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }

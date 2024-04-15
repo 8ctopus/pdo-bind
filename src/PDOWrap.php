@@ -42,9 +42,9 @@ class PDOWrap
      * @param  string $query
      * @param  array  $options
      *
-     * @return PDOStatementWrap|false
+     * @return PDOStatementWrapAdvanced|false
      */
-    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
+    public function prepare(string $query, array $options = []) : false|PDOStatementWrapAdvanced
     {
         $result = $this->pdo->prepare($query, $options);
 
@@ -52,7 +52,7 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result);
+        return new PDOStatementWrapAdvanced($result);
     }
 
     /**
@@ -61,9 +61,9 @@ class PDOWrap
      * @param  string $query
      * @param  [type] $vars
      *
-     * @return PDOStatementWrap|false
+     * @return PDOStatementWrapAdvanced|false
      */
-    public function query(string $query, ...$vars) : false|PDOStatementWrap
+    public function query(string $query, ...$vars) : false|PDOStatementWrapAdvanced
     {
         $result = $this->pdo->query($query, ...$vars);
 
@@ -71,6 +71,6 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result);
+        return new PDOStatementWrapAdvanced($result);
     }
 }

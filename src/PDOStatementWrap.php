@@ -10,7 +10,7 @@ use PDOStatement;
 
 class PDOStatementWrap
 {
-    private PDOStatement $statement;
+    protected PDOStatement $statement;
 
     /**
      * Constructor
