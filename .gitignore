@@ -6,6 +6,9 @@
 /.phpunit.result.cache
 /coverage/
 
+# docker
+/docker/
+
 # other
 /*.sublime-workspace
 /.php-cs-fixer.cache

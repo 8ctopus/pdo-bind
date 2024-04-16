@@ -116,7 +116,7 @@ class PDOStatementWrap
 
         $meta = $this->meta();
 
-        $type = $meta[$column]['sqlite:decl_type'];
+        $type = $meta[$column]['type'];
 
         switch ($type) {
             case 'BIT':
@@ -154,11 +154,11 @@ class PDOStatementWrap
         $rowsCount = count($rows);
 
         for ($column = 0; $column < $columnsCount; ++$column) {
-            $type = $meta[$column]['sqlite:decl_type'];
+            $type = $meta[$column]['type'];
             $name = $meta[$column]['name'];
 
             // conversion not needed
-            if (in_array($type, ['INT', 'INTEGER', 'VARCHAR(40)'])) {
+            if (in_array($type, ['INT', 'INTEGER', 'LONG', 'VARCHAR(40)', 'VAR_STRING'])) {
                 continue;
             }
 
@@ -185,14 +185,25 @@ class PDOStatementWrap
         return $rows;
     }
 
+    /**
+     * Get column meta
+     *
+     * @return array
+     */
     private function meta() : array
     {
         $columnsCount = $this->statement->columnCount();
 
+        $metas = [];
+
         for ($i = 0; $i < $columnsCount; $i++) {
-            $meta[] = $this->statement->getColumnMeta($i);
+            $meta = $this->statement->getColumnMeta($i);
+
+            $meta['type'] = $meta['sqlite:decl_type'] ?? $meta['mysql:decl_type'] ?? $meta['native_type'];
+
+            $metas[] = $meta;
         }
 
-        return $meta;
+        return $metas;
     }
 }
