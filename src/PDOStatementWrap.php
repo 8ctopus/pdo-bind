@@ -50,6 +50,10 @@ class PDOStatementWrap
     {
         if ($params) {
             foreach ($params as $key => $value) {
+                if ($value instanceof DateTime) {
+                    $value = $value->format('Y-m-d H:i:s');
+                }
+
                 $this->statement->bindValue($key, $value, $this->typeToParam($value));
             }
         }
