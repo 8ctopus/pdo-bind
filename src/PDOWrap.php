@@ -9,7 +9,6 @@ use PDO;
 class PDOWrap
 {
     private readonly PDO $pdo;
-    private readonly bool $convert;
 
     /**
      * Constructor
@@ -18,12 +17,10 @@ class PDOWrap
      * @param ?string $username
      * @param ?string $password
      * @param ?array  $options
-     * @param bool    $convert
      */
-    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null, bool $convert = false)
+    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
     {
         $this->pdo = new PDO($dsn, $username, $password, $options);
-        $this->convert = $convert;
     }
 
     /**
@@ -44,10 +41,11 @@ class PDOWrap
      *
      * @param  string $query
      * @param  array  $options
+     * @param  bool   $convert
      *
      * @return PDOStatementWrap|false
      */
-    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
+    public function prepare(string $query, array $options = [], bool $convert = false) : false|PDOStatementWrap
     {
         $result = $this->pdo->prepare($query, $options);
 
@@ -55,7 +53,7 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result, $this->convert);
+        return new PDOStatementWrap($result, $convert);
     }
 
     /**
@@ -74,6 +72,6 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result, $this->convert);
+        return new PDOStatementWrap($result, false);
     }
 }
