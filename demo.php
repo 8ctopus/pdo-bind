@@ -17,7 +17,7 @@ $db = new PDOWrap('sqlite::memory:', null, null, [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     // better prevention against SQL injections
     PDO::ATTR_EMULATE_PREPARES => false,
-], true);
+]);
 
 $sql = <<<'SQL'
 CREATE TABLE `test` (
@@ -29,7 +29,7 @@ CREATE TABLE `test` (
 )
 SQL;
 
-$query = $db->prepare($sql);
+$query = $db->prepare($sql, [], true);
 $query->execute();
 
 $sql = <<<'SQL'
@@ -39,7 +39,7 @@ VALUES
     (:birthday, :name, :salary, :boss)
 SQL;
 
-$query = $db->prepare($sql);
+$query = $db->prepare($sql, [], true);
 
 $staff = [
     [
@@ -73,7 +73,7 @@ FROM
     `test`
 SQL;
 
-$query = $db->prepare($sql);
+$query = $db->prepare($sql, [], true);
 $query->execute();
 
 while ($row = $query->fetch()) {
@@ -81,7 +81,7 @@ while ($row = $query->fetch()) {
     echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
 
-$query = $db->prepare($sql);
+$query = $db->prepare($sql, [], true);
 $query->execute();
 
 $rows = $query->fetchAll();
@@ -90,3 +90,11 @@ foreach ($rows as $row) {
     $birthday = $row['birthday']->format('Y-m-d');
     echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
+
+$query = $db->prepare($sql, [], true);
+$query->execute();
+
+$value = $query->fetchColumn(1);
+
+$birthday = $value->format('Y-m-d');
+echo "{$birthday}\n";

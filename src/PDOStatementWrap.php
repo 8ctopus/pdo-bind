@@ -95,7 +95,7 @@ class PDOStatementWrap
         return $this->convertColumns([$row])[0];
     }
 
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args) : array
+    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args) : array|false
     {
         $rows = $this->statement->fetchAll($mode, ...$args);
 
@@ -104,6 +104,38 @@ class PDOStatementWrap
         }
 
         return $this->convertColumns($rows);
+    }
+
+    public function fetchColumn(int $column = 0) : mixed
+    {
+        $value = $this->statement->fetchColumn($column);
+
+        if ($value === false || $this->convert === false) {
+            return $value;
+        }
+
+        $meta = $this->meta();
+
+        $type = $meta[$column]['sqlite:decl_type'];
+
+        switch ($type) {
+            case 'BIT':
+                $value = (bool) $value;
+                break;
+
+            case 'DATE':
+                $value = DateTime::createFromFormat('Y-m-d', $value);
+                break;
+
+            case 'DATETIME':
+                $value = DateTime::createFromFormat('Y-m-d H:i:s', $value);
+                break;
+
+            default:
+                throw new Exception("unknown column type - {$type}");
+        }
+
+        return $value;
     }
 
     /**
@@ -117,15 +149,13 @@ class PDOStatementWrap
     {
         $columnsCount = $this->statement->columnCount();
 
-        for ($i = 0; $i < $columnsCount; $i++) {
-            $metas[] = $this->statement->getColumnMeta($i);
-        }
+        $meta = $this->meta();
 
         $rowsCount = count($rows);
 
         for ($column = 0; $column < $columnsCount; ++$column) {
-            $type = $metas[$column]['sqlite:decl_type'];
-            $name = $metas[$column]['name'];
+            $type = $meta[$column]['sqlite:decl_type'];
+            $name = $meta[$column]['name'];
 
             // conversion not needed
             if (in_array($type, ['INT', 'INTEGER', 'VARCHAR(40)'])) {
@@ -149,11 +179,20 @@ class PDOStatementWrap
                     default:
                         throw new Exception("unknown column type - {$type}");
                 }
-
-                ++$i;
             }
         }
 
         return $rows;
+    }
+
+    private function meta() : array
+    {
+        $columnsCount = $this->statement->columnCount();
+
+        for ($i = 0; $i < $columnsCount; $i++) {
+            $meta[] = $this->statement->getColumnMeta($i);
+        }
+
+        return $meta;
     }
 }
