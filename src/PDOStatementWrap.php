@@ -153,6 +153,7 @@ class PDOStatementWrap
                 return PDO::PARAM_STR;
 
             case 'integer':
+            case 'double':
                 return PDO::PARAM_INT;
 
             case 'boolean':
