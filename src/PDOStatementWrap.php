@@ -30,7 +30,7 @@ class PDOStatementWrap
      * Call PDO method
      *
      * @param string $method
-     * @param array  $args
+     * @param array<mixed>  $args
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ class PDOStatementWrap
     /**
      * Override PDO execute method
      *
-     * @param null|array $params
+     * @param ?array<mixed> $params
      *
      * @return bool
      */
@@ -61,6 +61,15 @@ class PDOStatementWrap
         return $this->statement->execute();
     }
 
+    /**
+     * Fetch row
+     *
+     * @param int $mode
+     * @param int $cursorOrientation
+     * @param int $cursorOffset
+     *
+     * @return mixed
+     */
     public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) : mixed
     {
         $row = $this->statement->fetch($mode, $cursorOrientation, $cursorOffset);
@@ -72,17 +81,32 @@ class PDOStatementWrap
         return $this->convertColumns([$row])[0];
     }
 
-    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, ...$args) : array|false
+    /**
+     * Fetch all rows
+     *
+     * @param int $mode
+     * @param mixed ...$args
+     *
+     * @return false|array<mixed>
+     */
+    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args) : array|false
     {
         $rows = $this->statement->fetchAll($mode, ...$args);
 
-        if ($rows === false || $this->convert === false) {
+        if ($this->convert === false) {
             return $rows;
         }
 
         return $this->convertColumns($rows);
     }
 
+    /**
+     * Fetch column
+     *
+     * @param  int   $column
+     *
+     * @return mixed
+     */
     public function fetchColumn(int $column = 0) : mixed
     {
         $value = $this->statement->fetchColumn($column);
@@ -145,9 +169,9 @@ class PDOStatementWrap
     /**
      * Convert columns type
      *
-     * @param array $rows
+     * @param array<mixed> $rows
      *
-     * @return array
+     * @return array<mixed>
      */
     private function convertColumns(array $rows) : array
     {
@@ -192,7 +216,7 @@ class PDOStatementWrap
     /**
      * Get column meta
      *
-     * @return array
+     * @return array<mixed>
      */
     private function meta() : array
     {

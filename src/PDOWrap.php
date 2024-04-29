@@ -16,7 +16,7 @@ class PDOWrap
      * @param string  $dsn
      * @param ?string $username
      * @param ?string $password
-     * @param ?array  $options
+     * @param ?array<string>  $options
      */
     public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
     {
@@ -27,7 +27,7 @@ class PDOWrap
      * Call PDO method
      *
      * @param string $method
-     * @param array  $args
+     * @param array<mixed>  $args
      *
      * @return mixed
      */
@@ -40,7 +40,7 @@ class PDOWrap
      * Override PDO prepare method
      *
      * @param string $query
-     * @param array  $options
+     * @param array<mixed>  $options
      * @param bool   $convert
      *
      * @return false|PDOStatementWrap
@@ -60,11 +60,11 @@ class PDOWrap
      * Override PDO query method
      *
      * @param string $query
-     * @param  [type] $vars
+     * @param mixed $vars
      *
      * @return false|PDOStatementWrap
      */
-    public function query(string $query, ...$vars) : false|PDOStatementWrap
+    public function query(string $query, mixed ...$vars) : false|PDOStatementWrap
     {
         $result = $this->pdo->query($query, ...$vars);
 
