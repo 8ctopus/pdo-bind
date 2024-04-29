@@ -16,7 +16,7 @@ class PDOWrap
      * @param string         $dsn
      * @param ?string        $username
      * @param ?string        $password
-     * @param ?array<string> $options
+     * @param ?array<int,mixed> $options
      */
     public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
     {
