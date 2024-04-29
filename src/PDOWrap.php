@@ -26,8 +26,8 @@ class PDOWrap
     /**
      * Call PDO method
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array  $args
      *
      * @return mixed
      */
@@ -39,11 +39,11 @@ class PDOWrap
     /**
      * Override PDO prepare method
      *
-     * @param  string $query
-     * @param  array  $options
-     * @param  bool   $convert
+     * @param string $query
+     * @param array  $options
+     * @param bool   $convert
      *
-     * @return PDOStatementWrap|false
+     * @return false|PDOStatementWrap
      */
     public function prepare(string $query, array $options = [], bool $convert = false) : false|PDOStatementWrap
     {
@@ -59,10 +59,10 @@ class PDOWrap
     /**
      * Override PDO query method
      *
-     * @param  string $query
+     * @param string $query
      * @param  [type] $vars
      *
-     * @return PDOStatementWrap|false
+     * @return false|PDOStatementWrap
      */
     public function query(string $query, ...$vars) : false|PDOStatementWrap
     {

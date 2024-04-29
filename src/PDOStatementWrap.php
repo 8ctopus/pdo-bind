@@ -18,7 +18,7 @@ class PDOStatementWrap
      * Constructor
      *
      * @param PDOStatement $statement
-     * @param bool $convert
+     * @param bool         $convert
      */
     public function __construct(PDOStatement $statement, bool $convert)
     {
@@ -29,8 +29,8 @@ class PDOStatementWrap
     /**
      * Call PDO method
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array  $args
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ class PDOStatementWrap
     /**
      * Override PDO execute method
      *
-     * @param  array|null $params
+     * @param null|array $params
      *
      * @return bool
      */
@@ -59,33 +59,6 @@ class PDOStatementWrap
         }
 
         return $this->statement->execute();
-    }
-
-    /**
-     * Value to PDO type
-     *
-     * @param mixed $value
-     *
-     * @return int PDO type
-     */
-    private function typeToParam(mixed $value) : int
-    {
-        switch ($type = gettype($value)) {
-            case 'string':
-                return PDO::PARAM_STR;
-
-            case 'integer':
-                return PDO::PARAM_INT;
-
-            case 'boolean':
-                return PDO::PARAM_BOOL;
-
-            case 'NULL':
-                return PDO::PARAM_NULL;
-
-            default:
-                throw new Exception("unsupported type - {$type}");
-        }
     }
 
     public function fetch(int $mode = PDO::FETCH_DEFAULT, int $cursorOrientation = PDO::FETCH_ORI_NEXT, int $cursorOffset = 0) : mixed
@@ -143,9 +116,36 @@ class PDOStatementWrap
     }
 
     /**
+     * Value to PDO type
+     *
+     * @param mixed $value
+     *
+     * @return int PDO type
+     */
+    private function typeToParam(mixed $value) : int
+    {
+        switch ($type = gettype($value)) {
+            case 'string':
+                return PDO::PARAM_STR;
+
+            case 'integer':
+                return PDO::PARAM_INT;
+
+            case 'boolean':
+                return PDO::PARAM_BOOL;
+
+            case 'NULL':
+                return PDO::PARAM_NULL;
+
+            default:
+                throw new Exception("unsupported type - {$type}");
+        }
+    }
+
+    /**
      * Convert columns type
      *
-     * @param  array $rows
+     * @param array $rows
      *
      * @return array
      */
@@ -162,7 +162,7 @@ class PDOStatementWrap
             $name = $meta[$column]['name'];
 
             // conversion not needed
-            if (in_array($type, ['INT', 'INTEGER', 'LONG', 'VARCHAR(40)', 'VAR_STRING'])) {
+            if (in_array($type, ['INT', 'INTEGER', 'LONG', 'VARCHAR(40)', 'VAR_STRING'], true)) {
                 continue;
             }
 
@@ -200,7 +200,7 @@ class PDOStatementWrap
 
         $metas = [];
 
-        for ($i = 0; $i < $columnsCount; $i++) {
+        for ($i = 0; $i < $columnsCount; ++$i) {
             $meta = $this->statement->getColumnMeta($i);
 
             $meta['type'] = $meta['sqlite:decl_type'] ?? $meta['mysql:decl_type'] ?? $meta['native_type'];
