@@ -29,8 +29,8 @@ class PDOStatementWrap
     /**
      * Call PDO method
      *
-     * @param string $method
-     * @param array<mixed>  $args
+     * @param string       $method
+     * @param array<mixed> $args
      *
      * @return mixed
      */
@@ -84,10 +84,10 @@ class PDOStatementWrap
     /**
      * Fetch all rows
      *
-     * @param int $mode
+     * @param int   $mode
      * @param mixed ...$args
      *
-     * @return false|array<mixed>
+     * @return array<mixed>|false
      */
     public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args) : array|false
     {
@@ -103,7 +103,7 @@ class PDOStatementWrap
     /**
      * Fetch column
      *
-     * @param  int   $column
+     * @param int $column
      *
      * @return mixed
      */
