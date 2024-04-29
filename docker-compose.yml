@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   mariadb:
     image: 8ct8pus/mariadb-alpine:1.0.11
