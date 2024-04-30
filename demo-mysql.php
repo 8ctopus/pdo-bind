@@ -15,7 +15,7 @@ $name = 'test';
 $user = 'root';
 $pass = '123';
 
-$db = new PDOWrap("mysql:host={$host};dbname={$name};charset=utf8", $user, $pass, [
+$db = PDOWrap::factory("mysql:host={$host};dbname={$name};charset=utf8", $user, $pass, [
     // use exceptions
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     // get arrays

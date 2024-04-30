@@ -8,19 +8,31 @@ use PDO;
 
 class PDOWrap
 {
-    private readonly PDO $pdo;
+    private readonly PDO $db;
 
     /**
      * Constructor
      *
-     * @param string         $dsn
-     * @param ?string        $username
-     * @param ?string        $password
-     * @param ?array<int,mixed> $options
+     * @param PDO $db
      */
-    public function __construct(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null)
+    public function __construct(PDO $db)
     {
-        $this->pdo = new PDO($dsn, $username, $password, $options);
+        $this->db = $db;
+    }
+
+    /**
+     * Factory
+     *
+     * @param  string      $dsn
+     * @param  string|null $username
+     * @param  string|null $password
+     * @param  array|null  $options
+     *
+     * @return self
+     */
+    public static function factory(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null) : self
+    {
+        return new self(new PDO($dsn, $username, $password, $options));
     }
 
     /**
@@ -33,7 +45,7 @@ class PDOWrap
      */
     public function __call(string $method, array $args) : mixed
     {
-        return $this->pdo->{$method}(...$args);
+        return $this->db->{$method}(...$args);
     }
 
     /**
@@ -47,7 +59,7 @@ class PDOWrap
      */
     public function prepare(string $query, array $options = [], bool $convert = false) : false|PDOStatementWrap
     {
-        $result = $this->pdo->prepare($query, $options);
+        $result = $this->db->prepare($query, $options);
 
         if (!$result) {
             return false;
@@ -66,7 +78,7 @@ class PDOWrap
      */
     public function query(string $query, mixed ...$vars) : false|PDOStatementWrap
     {
-        $result = $this->pdo->query($query, ...$vars);
+        $result = $this->db->query($query, ...$vars);
 
         if (!$result) {
             return false;

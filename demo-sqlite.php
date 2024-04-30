@@ -10,7 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 (new Provider())
     ->register();
 
-$db = new PDOWrap('sqlite::memory:', null, null, [
+$db = PDOWrap::factory('sqlite::memory:', null, null, [
     // use exceptions
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     // get arrays

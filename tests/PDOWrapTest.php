@@ -22,7 +22,7 @@ final class PDOWrapTest extends TestCase
 
     public function testConstructor() : void
     {
-        self::$db = new PDOWrap('sqlite::memory:', null, null, [
+        self::$db = PDOWrap::factory('sqlite::memory:', null, null, [
             // use exceptions
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             // get arrays
