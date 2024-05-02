@@ -52,9 +52,7 @@ class PDOStatementWrap
             foreach ($params as $key => $value) {
                 if ($value instanceof PDODate) {
                     $value = $value->format('Y-m-d');
-                }
-
-                if ($value instanceof DateTime) {
+                } elseif ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 }
 
