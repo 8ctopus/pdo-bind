@@ -64,19 +64,19 @@ final class PDOWrapTest extends TestCase
 
         $staff = [
             [
-                'birthday' => (new DateTime('1995-05-01'))->format('Y-m-d'),
+                'birthday' => new PDODate('1995-05-01'),
                 'name' => 'Sharon',
                 'salary' => 200,
                 'boss' => true,
             ],
             [
-                'birthday' => (new DateTime('2000-01-01'))->format('Y-m-d'),
+                'birthday' => new PDODate('2000-01-01'),
                 'name' => 'John',
                 'salary' => 140,
                 'boss' => false,
             ],
             [
-                'birthday' => (new DateTime('1985-08-01'))->format('Y-m-d'),
+                'birthday' => new PDODate('1985-08-01'),
                 'name' => 'Oliver',
                 'salary' => 120,
                 'boss' => false,
