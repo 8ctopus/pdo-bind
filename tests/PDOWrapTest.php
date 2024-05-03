@@ -183,14 +183,15 @@ final class PDOWrapTest extends TestCase
 
         $record = $query->fetchObject();
 
-        $expected = new stdClass();
-        $expected->birthday = '1995-05-01';
-        $expected->name = 'Sharon';
-        $expected->salary = 200;
-        $expected->boss = 1;
-        $expected->comment = "She's the boss";
+        $expected = [
+            'birthday' => '1995-05-01',
+            'name' => 'Sharon',
+            'salary' => 200,
+            'boss' => true,
+            'comment' => "She's the boss",
+        ];
 
-        self::assertEquals($expected, $record);
+        self::assertEquals((object) $expected, $record);
 
         $query->execute([
             'from' => new PDODate('1995-05-01'),

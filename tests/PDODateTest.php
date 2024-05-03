@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Oct8pus\PDOWrap;
 
 use DateTime;
-use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
