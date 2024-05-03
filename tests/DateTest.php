@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \Oct8pus\PDOBind\PDOStatementBind
  * @covers \Oct8pus\PDOBind\Date
+ * @covers \Oct8pus\PDOBind\PDOStatementBind
  */
 class DateTest extends TestCase
 {

@@ -21,21 +21,6 @@ class PDOBind
     }
 
     /**
-     * Factory
-     *
-     * @param  string      $dsn
-     * @param  string|null $username
-     * @param  string|null $password
-     * @param  array|null  $options
-     *
-     * @return self
-     */
-    public static function factory(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null) : self
-    {
-        return new self(new PDO($dsn, $username, $password, $options));
-    }
-
-    /**
      * Call PDO method
      *
      * @param string       $method
@@ -46,6 +31,21 @@ class PDOBind
     public function __call(string $method, array $args) : mixed
     {
         return $this->db->{$method}(...$args);
+    }
+
+    /**
+     * Factory
+     *
+     * @param string      $dsn
+     * @param null|string $username
+     * @param null|string $password
+     * @param null|array  $options
+     *
+     * @return self
+     */
+    public static function factory(string $dsn, ?string $username = null, ?string $password = null, ?array $options = null) : self
+    {
+        return new self(new PDO($dsn, $username, $password, $options));
     }
 
     /**

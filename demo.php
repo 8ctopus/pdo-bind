@@ -15,7 +15,7 @@ echo 'select database (sqlite,mysql): ';
 $input = fgets(STDIN);
 
 $database = $input === 'mysql' ? [
-    "mysql:host=localhost;dbname=test",
+    'mysql:host=localhost;dbname=test',
     $user,
     $pass,
 ] : [

@@ -13,8 +13,8 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \Oct8pus\PDOBind\PDOStatementBind
  * @covers \Oct8pus\PDOBind\PDOBind
+ * @covers \Oct8pus\PDOBind\PDOStatementBind
  */
 final class PDOBindTest extends TestCase
 {
