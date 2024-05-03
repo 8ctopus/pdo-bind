@@ -81,6 +81,7 @@ final class PDOWrapTest extends TestCase
             `name` VARCHAR(40) NOT NULL,
             `salary` INTEGER NOT NULL,
             `boss` BIT NOT NULL,
+            `lastSeen` DATETIME NULL,
             `comment` VARCHAR(40) NULL
         )
         SQL;
@@ -98,9 +99,9 @@ final class PDOWrapTest extends TestCase
     {
         $sql = <<<'SQL'
         INSERT INTO `test`
-            (`birthday`, `name`, `salary`, `boss`, `comment`)
+            (`birthday`, `name`, `salary`, `boss`, `lastSeen`, `comment`)
         VALUES
-            (:birthday, :name, :salary, :boss, :comment)
+            (:birthday, :name, :salary, :boss, :lastSeen, :comment)
         SQL;
 
         $query = self::$db->prepare($sql);
@@ -111,6 +112,7 @@ final class PDOWrapTest extends TestCase
                 'name' => 'Sharon',
                 'salary' => 200,
                 'boss' => true,
+                'lastSeen' => new DateTime('2021-10-08 12:00:00'),
                 'comment' => "She's the boss",
             ],
             [
@@ -118,6 +120,7 @@ final class PDOWrapTest extends TestCase
                 'name' => 'John',
                 'salary' => 140,
                 'boss' => false,
+                'lastSeen' => new DateTime('2023-10-08 12:00:00'),
                 'comment' => null,
             ],
             [
@@ -125,6 +128,7 @@ final class PDOWrapTest extends TestCase
                 'name' => 'Oliver',
                 'salary' => 120,
                 'boss' => false,
+                'lastSeen' => new DateTime('2024-10-08 12:00:00'),
                 'comment' => null,
             ],
         ];
@@ -167,17 +171,17 @@ final class PDOWrapTest extends TestCase
     {
         $sql = <<<'SQL'
         SELECT
-            `birthday`, `name`, `salary`, `boss`, `comment`
+            `birthday`, `name`
         FROM
             `test`
         WHERE
-            `birthday` BETWEEN :from AND :to
+            `lastSeen` BETWEEN :from AND :to
         SQL;
 
         $query = self::$db->prepare($sql);
         $query->execute([
-            'from' => new Date('1995-05-01'),
-            'to' => new Date('1995-05-01'),
+            'from' => new DateTime('2021-10-08 11:00:00'),
+            'to' => new DateTime('2021-10-08 14:00:00'),
         ]);
 
         $record = $query->fetchObject();
@@ -185,30 +189,35 @@ final class PDOWrapTest extends TestCase
         $expected = [
             'birthday' => '1995-05-01',
             'name' => 'Sharon',
-            'salary' => 200,
-            'boss' => true,
-            'comment' => "She's the boss",
         ];
 
         self::assertEquals((object) $expected, $record);
 
+        $query = self::$db->prepare($sql);
         $query->execute([
-            'from' => new Date('1995-05-01'),
-            'to' => new Date('1995-05-01'),
+            'from' => new DateTime('2021-10-08'),
+            'to' => new DateTime('2021-10-08'),
         ]);
 
         $name = $query->fetchColumn(1);
+        self::assertSame(false, $name);
 
-        self::assertSame('Sharon', $name);
+        $sql = <<<'SQL'
+        SELECT
+            `birthday`, `name`
+        FROM
+            `test`
+        WHERE
+            DATE(`lastSeen`) BETWEEN :from AND :to
+        SQL;
 
         $query = self::$db->prepare($sql);
         $query->execute([
-            'from' => new DateTime('1995-05-01'),
-            'to' => new DateTime('1995-05-01'),
+            'from' => new Date('2021-10-08'),
+            'to' => new Date('2021-10-08'),
         ]);
 
         $row = $query->fetch();
-
-        self::assertSame(false, $row);
+        self::assertSame($expected, $row);
     }
 }
