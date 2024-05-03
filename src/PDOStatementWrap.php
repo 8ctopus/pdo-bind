@@ -123,7 +123,9 @@ class PDOStatementWrap
                 return PDO::PARAM_NULL;
 
             default:
+                // @codeCoverageIgnoreStart
                 throw new Exception("unsupported type - {$type}");
+                // @codeCoverageIgnoreEnd
         }
     }
 }

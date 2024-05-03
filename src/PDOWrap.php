@@ -61,7 +61,9 @@ class PDOWrap
         $result = $this->db->prepare($query, $options);
 
         if (!$result) {
+            // @codeCoverageIgnoreStart
             return false;
+            // @codeCoverageIgnoreEnd
         }
 
         return new PDOStatementWrap($result);
@@ -80,7 +82,9 @@ class PDOWrap
         $result = $this->db->query($query, ...$vars);
 
         if (!$result) {
+            // @codeCoverageIgnoreStart
             return false;
+            // @codeCoverageIgnoreEnd
         }
 
         return new PDOStatementWrap($result);

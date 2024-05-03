@@ -50,7 +50,8 @@ final class PDOWrapTest extends TestCase
             `birthday` DATE NOT NULL,
             `name` VARCHAR(40) NOT NULL,
             `salary` INTEGER NOT NULL,
-            `boss` BIT NOT NULL
+            `boss` BIT NOT NULL,
+            `comment` VARCHAR(40) NULL
         )
         SQL;
 
@@ -63,9 +64,9 @@ final class PDOWrapTest extends TestCase
     {
         $sql = <<<'SQL'
         INSERT INTO `test`
-            (`birthday`, `name`, `salary`, `boss`)
+            (`birthday`, `name`, `salary`, `boss`, `comment`)
         VALUES
-            (:birthday, :name, :salary, :boss)
+            (:birthday, :name, :salary, :boss, :comment)
         SQL;
 
         $query = self::$db->prepare($sql);
@@ -76,18 +77,21 @@ final class PDOWrapTest extends TestCase
                 'name' => 'Sharon',
                 'salary' => 200,
                 'boss' => true,
+                'comment' => "She's the boss",
             ],
             [
                 'birthday' => new PDODate('2000-01-01'),
                 'name' => 'John',
                 'salary' => 140,
                 'boss' => false,
+                'comment' => null,
             ],
             [
                 'birthday' => new PDODate('1985-08-01'),
                 'name' => 'Oliver',
                 'salary' => 120,
                 'boss' => false,
+                'comment' => null,
             ],
         ];
 
@@ -103,7 +107,6 @@ final class PDOWrapTest extends TestCase
         SQL;
 
         $query = self::$db->query($sql);
-
         $result = $query->fetchAll();
 
         self::assertSame([
@@ -130,7 +133,7 @@ final class PDOWrapTest extends TestCase
     {
         $sql = <<<'SQL'
         SELECT
-            `birthday`, `name`, `salary`, `boss`
+            `birthday`, `name`, `salary`, `boss`, `comment`
         FROM
             `test`
         WHERE
@@ -150,8 +153,18 @@ final class PDOWrapTest extends TestCase
         $expected->name = 'Sharon';
         $expected->salary = 200;
         $expected->boss = 1;
+        $expected->comment = "She's the boss";
 
         self::assertEquals($expected, $record);
+
+        $query->execute([
+            'from' => new PDODate('1995-05-01'),
+            'to' => new PDODate('1995-05-01'),
+        ]);
+
+        $name = $query->fetchColumn(1);
+
+        self::assertSame('Sharon', $name);
 
         $query = self::$db->prepare($sql);
         $query->execute([
