@@ -30,16 +30,6 @@ $sth->execute();
 into this:
 
 ```php
-$sql = <<<SQL
-SELECT
-    name, colour, calories
-FROM
-        fruits
-WHERE
-    calories < :calories AND
-    colour = :colour
-SQL;
-
 $sth = $db->prepare($sql);
 $sth->execute([
     'calories' => 150,
