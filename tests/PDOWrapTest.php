@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Oct8pus\PDOWrap;
+namespace Tests;
 
 use DateTime;
-use Exception;
+use Oct8pus\PDOWrap\Date;
+use Oct8pus\PDOWrap\PDOWrap;
 use PDO;
 use PHPUnit\Framework\TestCase;
 
@@ -21,51 +22,16 @@ final class PDOWrapTest extends TestCase
 
     public static function setUpBeforeClass() : void {}
 
-    public function database() : array
-    {
-        switch ($engine = $_ENV['DB_ENGINE']) {
-            case 'mysql':
-                $args = [
-                    "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}",
-                    $_ENV['DB_USER'],
-                    $_ENV['DB_PASS'],
-                ];
-                break;
-
-            case 'sqlite':
-                $args = [
-                    'sqlite::memory:',
-                    null,
-                    null,
-                ];
-                break;
-
-            default:
-                throw new Exception("unsupported database engine {$engine}");
-        }
-
-        $args[] = [
-            // use exceptions
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            // get arrays
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            // better prevention against SQL injections
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-
-        return $args;
-    }
-
     public function testConstructor() : void
     {
-        $db = new PDOWrap(new PDO(...$this->database()));
+        $db = new PDOWrap(new PDO(...Database::get()));
 
         self::assertInstanceOf(PDOWrap::class, $db);
     }
 
     public function testFactory() : void
     {
-        self::$db = PDOWrap::factory(...$this->database());
+        self::$db = PDOWrap::factory(...Database::get());
 
         self::assertInstanceOf(PDOWrap::class, self::$db);
     }

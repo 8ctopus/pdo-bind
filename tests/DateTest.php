@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Oct8pus\PDOWrap;
+namespace Tests;
 
 use DateTime;
+use Oct8pus\PDOWrap\Date;
 use PHPUnit\Framework\TestCase;
 
 /**
