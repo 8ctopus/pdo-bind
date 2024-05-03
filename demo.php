@@ -5,7 +5,6 @@ declare(strict_types=1);
 use NunoMaduro\Collision\Provider;
 use Oct8pus\PDOBind\Date;
 use Oct8pus\PDOBind\PDOBind;
-use Tests\Database;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

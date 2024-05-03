@@ -1,13 +1,12 @@
 <?php
 
-// php does not distinguish between a date and a date time hence this class
-
 declare(strict_types=1);
 
 namespace Oct8pus\PDOBind;
 
 use DateTime;
 
+// php does not distinguish between a date and a date time hence this class
 class Date extends DateTime
 {
     /**
