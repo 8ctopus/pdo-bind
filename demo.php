@@ -5,25 +5,33 @@ declare(strict_types=1);
 use NunoMaduro\Collision\Provider;
 use Oct8pus\PDOWrap\Date;
 use Oct8pus\PDOWrap\PDOWrap;
+use Tests\Database;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 (new Provider())
     ->register();
 
-$host = 'localhost';
-$name = 'test';
-$user = 'root';
-$pass = '123';
+echo 'select database (sqlite,mysql): ';
+$input = fgets(STDIN);
 
-$db = PDOWrap::factory("mysql:host={$host};dbname={$name};charset=utf8", $user, $pass, [
-    // use exceptions
+$database = $input === 'mysql' ? [
+    "mysql:host=localhost;dbname=test",
+    $user,
+    $pass,
+] : [
+    'sqlite::memory:',
+    null,
+    null,
+];
+
+$database[] = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    // get arrays
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    // better prevention against SQL injections
     PDO::ATTR_EMULATE_PREPARES => false,
-]);
+];
+
+$db = PDOWrap::factory(...$database);
 
 $sql = <<<'SQL'
 DROP TABLE IF EXISTS `test`
@@ -40,6 +48,10 @@ CREATE TABLE `test` (
     `boss` BIT NOT NULL
 )
 SQL;
+
+if ($db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+    $sql = str_replace('AUTO_INCREMENT', 'AUTOINCREMENT', $sql);
+}
 
 $query = $db->prepare($sql);
 $query->execute();
