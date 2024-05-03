@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @covers \Oct8pus\PDOBind\Date
  * @covers \Oct8pus\PDOBind\PDOStatementBind
  */
-class DateTest extends TestCase
+final class DateTest extends TestCase
 {
     public function test() : void
     {

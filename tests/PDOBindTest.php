@@ -166,7 +166,7 @@ final class PDOBindTest extends TestCase
         ]);
 
         $name = $query->fetchColumn(1);
-        self::assertSame(false, $name);
+        self::assertFalse($name);
 
         $sql = <<<'SQL'
         SELECT
