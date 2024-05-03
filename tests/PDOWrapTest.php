@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Oct8pus\PDOWrap;
 
 use DateTime;
+use Exception;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -21,23 +22,51 @@ final class PDOWrapTest extends TestCase
 
     public static function setUpBeforeClass() : void {}
 
-    public function testConstructor() : void
+    public function database() : array
     {
-        $db = new PDOWrap(new PDO('sqlite::memory:'));
+        switch ($engine = $_ENV['DB_ENGINE']) {
+            case 'mysql':
+                $args = [
+                    "mysql:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_NAME']}",
+                    $_ENV['DB_USER'],
+                    $_ENV['DB_PASS'],
+                ];
+                break;
 
-        self::assertInstanceOf(PDOWrap::class, $db);
-    }
+            case 'sqlite':
+                $args = [
+                    'sqlite::memory:',
+                    null,
+                    null,
+                ];
+                break;
 
-    public function testFactory() : void
-    {
-        self::$db = PDOWrap::factory('sqlite::memory:', null, null, [
+            default:
+                throw new Exception("unsupported database engine {$engine}");
+        }
+
+        $args[] = [
             // use exceptions
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             // get arrays
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             // better prevention against SQL injections
             PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
+        ];
+
+        return $args;
+    }
+
+    public function testConstructor() : void
+    {
+        $db = new PDOWrap(new PDO(...$this->database()));
+
+        self::assertInstanceOf(PDOWrap::class, $db);
+    }
+
+    public function testFactory() : void
+    {
+        self::$db = PDOWrap::factory(...$this->database());
 
         self::assertInstanceOf(PDOWrap::class, self::$db);
     }
@@ -45,8 +74,10 @@ final class PDOWrapTest extends TestCase
     public function testDatabaseExec() : void
     {
         $sql = <<<'SQL'
+        DROP TABLE IF EXISTS `test`;
+
         CREATE TABLE `test` (
-            `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+            `id` INTEGER PRIMARY KEY AUTO_INCREMENT,
             `birthday` DATE NOT NULL,
             `name` VARCHAR(40) NOT NULL,
             `salary` INTEGER NOT NULL,
@@ -54,6 +85,10 @@ final class PDOWrapTest extends TestCase
             `comment` VARCHAR(40) NULL
         )
         SQL;
+
+        if ($_ENV['DB_ENGINE'] === 'sqlite') {
+            $sql = str_replace('AUTO_INCREMENT', 'AUTOINCREMENT', $sql);
+        }
 
         $result = self::$db->exec($sql);
 
