@@ -53,11 +53,10 @@ class PDOWrap
      *
      * @param string       $query
      * @param array<mixed> $options
-     * @param bool         $convert
      *
      * @return false|PDOStatementWrap
      */
-    public function prepare(string $query, array $options = [], bool $convert = false) : false|PDOStatementWrap
+    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
     {
         $result = $this->db->prepare($query, $options);
 
@@ -65,7 +64,7 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result, $convert);
+        return new PDOStatementWrap($result);
     }
 
     /**
@@ -84,6 +83,6 @@ class PDOWrap
             return false;
         }
 
-        return new PDOStatementWrap($result, false);
+        return new PDOStatementWrap($result);
     }
 }
