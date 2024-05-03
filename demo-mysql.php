@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use NunoMaduro\Collision\Provider;
+use Oct8pus\PDOWrap\Date;
 use Oct8pus\PDOWrap\PDOWrap;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -54,19 +55,19 @@ $query = $db->prepare($sql, [], true);
 
 $staff = [
     [
-        'birthday' => new DateTime('1995-05-01'),
+        'birthday' => new Date('1995-05-01'),
         'name' => 'Sharon',
         'salary' => 200,
         'boss' => true,
     ],
     [
-        'birthday' => new DateTime('2000-01-01'),
+        'birthday' => new Date('2000-01-01'),
         'name' => 'John',
         'salary' => 140,
         'boss' => false,
     ],
     [
-        'birthday' => new DateTime('1985-08-01'),
+        'birthday' => new Date('1985-08-01'),
         'name' => 'Oliver',
         'salary' => 120,
         'boss' => false,
@@ -88,8 +89,7 @@ $query = $db->prepare($sql, [], true);
 $query->execute();
 
 while ($row = $query->fetch()) {
-    $birthday = $row['birthday']->format('Y-m-d');
-    echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
+    echo "{$row['id']} {$row['birthday']} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
 
 $query = $db->prepare($sql, [], true);
@@ -98,14 +98,12 @@ $query->execute();
 $rows = $query->fetchAll();
 
 foreach ($rows as $row) {
-    $birthday = $row['birthday']->format('Y-m-d');
-    echo "{$row['id']} {$birthday} {$row['name']} {$row['salary']} {$row['boss']}\n";
+    echo "{$row['id']} {$row['birthday']} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
 
 $query = $db->prepare($sql, [], true);
 $query->execute();
 
-$value = $query->fetchColumn(1);
+$birthday = $query->fetchColumn(1);
 
-$birthday = $value->format('Y-m-d');
 echo "{$birthday}\n";
