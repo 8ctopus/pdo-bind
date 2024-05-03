@@ -48,7 +48,7 @@ WHERE
     `name` = :name
 ```
 
-In this statement, if name is a string then all is fine, however if name happens to be zero then we have a big problem as all the table records are deleted!
+In this statement, if `name` is a `string` then all is fine, however if name happens to be `zero` then we have a big problem as all the table records are deleted!
 
 ```sql
 DELETE FROM
