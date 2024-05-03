@@ -8,7 +8,6 @@ use DateTime;
 use Exception;
 use PDO;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 /**
  * @internal
@@ -108,21 +107,21 @@ final class PDOWrapTest extends TestCase
 
         $staff = [
             [
-                'birthday' => new PDODate('1995-05-01'),
+                'birthday' => new Date('1995-05-01'),
                 'name' => 'Sharon',
                 'salary' => 200,
                 'boss' => true,
                 'comment' => "She's the boss",
             ],
             [
-                'birthday' => new PDODate('2000-01-01'),
+                'birthday' => new Date('2000-01-01'),
                 'name' => 'John',
                 'salary' => 140,
                 'boss' => false,
                 'comment' => null,
             ],
             [
-                'birthday' => new PDODate('1985-08-01'),
+                'birthday' => new Date('1985-08-01'),
                 'name' => 'Oliver',
                 'salary' => 120,
                 'boss' => false,
@@ -177,8 +176,8 @@ final class PDOWrapTest extends TestCase
 
         $query = self::$db->prepare($sql);
         $query->execute([
-            'from' => new PDODate('1995-05-01'),
-            'to' => new PDODate('1995-05-01'),
+            'from' => new Date('1995-05-01'),
+            'to' => new Date('1995-05-01'),
         ]);
 
         $record = $query->fetchObject();
@@ -194,8 +193,8 @@ final class PDOWrapTest extends TestCase
         self::assertEquals((object) $expected, $record);
 
         $query->execute([
-            'from' => new PDODate('1995-05-01'),
-            'to' => new PDODate('1995-05-01'),
+            'from' => new Date('1995-05-01'),
+            'to' => new Date('1995-05-01'),
         ]);
 
         $name = $query->fetchColumn(1);

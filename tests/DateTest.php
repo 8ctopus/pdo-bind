@@ -11,13 +11,13 @@ use PHPUnit\Framework\TestCase;
  * @internal
  *
  * @covers \Oct8pus\PDOWrap\PDOStatementWrap
- * @covers \Oct8pus\PDOWrap\PDODate
+ * @covers \Oct8pus\PDOWrap\Date
  */
-class PDODateTest extends TestCase
+class DateTest extends TestCase
 {
     public function test() : void
     {
-        $date = new PDODate('2021-10-08');
+        $date = new Date('2021-10-08');
 
         self::assertInstanceOf(DateTime::class, $date);
         self::assertSame('2021-10-08', (string) $date);

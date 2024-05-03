@@ -6,7 +6,7 @@ namespace Oct8pus\PDOWrap;
 
 use DateTime;
 
-class PDODate extends DateTime
+class Date extends DateTime
 {
     public function __toString() : string
     {
