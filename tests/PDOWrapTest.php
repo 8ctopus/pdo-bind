@@ -7,6 +7,7 @@ namespace Oct8pus\PDOWrap;
 use DateTime;
 use PDO;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @internal
@@ -22,6 +23,13 @@ final class PDOWrapTest extends TestCase
 
     public function testConstructor() : void
     {
+        $db = new PDOWrap(new PDO('sqlite::memory:'));
+
+        self::assertInstanceOf(PDOWrap::class, $db);
+    }
+
+    public function testFactory() : void
+    {
         self::$db = PDOWrap::factory('sqlite::memory:', null, null, [
             // use exceptions
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -31,10 +39,10 @@ final class PDOWrapTest extends TestCase
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
 
-        self::assertTrue(true);
+        self::assertInstanceOf(PDOWrap::class, self::$db);
     }
 
-    public function testExec() : void
+    public function testDatabaseExec() : void
     {
         $sql = <<<'SQL'
         CREATE TABLE `test` (
@@ -51,7 +59,7 @@ final class PDOWrapTest extends TestCase
         self::assertSame(0, $result);
     }
 
-    public function testPrepareExecuteQuery() : void
+    public function testQueries() : void
     {
         $sql = <<<'SQL'
         INSERT INTO `test`
@@ -118,7 +126,7 @@ final class PDOWrapTest extends TestCase
         ], $result);
     }
 
-    public function testDates() : void
+    public function testDatesQuery() : void
     {
         $sql = <<<'SQL'
         SELECT
@@ -135,16 +143,15 @@ final class PDOWrapTest extends TestCase
             'to' => new PDODate('1995-05-01'),
         ]);
 
-        $row = $query->fetch();
+        $record = $query->fetchObject();
 
-        $expected = [
-            'birthday' => '1995-05-01',
-            'name' => 'Sharon',
-            'salary' => 200,
-            'boss' => 1,
-        ];
+        $expected = new stdClass();
+        $expected->birthday = '1995-05-01';
+        $expected->name = 'Sharon';
+        $expected->salary = 200;
+        $expected->boss = 1;
 
-        self::assertSame($expected, $row);
+        self::assertEquals($expected, $record);
 
         $query = self::$db->prepare($sql);
         $query->execute([
