@@ -1,9 +1,9 @@
 {
-    "name": "8ctopus/pdo-wrap",
+    "name": "8ctopus/pdo-bind",
     "type": "library",
     "description": "Fix PDO not interpreting binary values",
     "keywords": ["PDO", "binary", "String data, right truncated: 1406 Data too long for column"],
-    "homepage": "https://github.com/8ctopus/pdo-wrap",
+    "homepage": "https://github.com/8ctopus/pdo-bind",
     "license": "MIT",
     "authors": [
         {
@@ -25,7 +25,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Oct8pus\\PDOWrap\\": "src"
+            "Oct8pus\\PDOBind\\": "src"
         }
     },
     "autoload-dev": {

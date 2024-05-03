@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Tests;
 
 use DateTime;
-use Oct8pus\PDOWrap\Date;
+use Oct8pus\PDOBind\Date;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  *
- * @covers \Oct8pus\PDOWrap\PDOStatementWrap
- * @covers \Oct8pus\PDOWrap\Date
+ * @covers \Oct8pus\PDOBind\PDOStatementBind
+ * @covers \Oct8pus\PDOBind\Date
  */
 class DateTest extends TestCase
 {

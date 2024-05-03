@@ -4,7 +4,7 @@
 
 declare(strict_types=1);
 
-namespace Oct8pus\PDOWrap;
+namespace Oct8pus\PDOBind;
 
 use DateTime;
 

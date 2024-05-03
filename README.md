@@ -1,10 +1,10 @@
-# PDOWrap
+# PDOBind
 
 <!---
-[![Latest Stable Version](http://poser.pugx.org/8ctopus/pdo-wrap/v)](https://packagist.org/packages/8ctopus/pdo-wrap)
-[![Total Downloads](http://poser.pugx.org/8ctopus/pdo-wrap/downloads)](https://packagist.org/packages/8ctopus/pdo-wrap)
-[![License](http://poser.pugx.org/8ctopus/pdo-wrap/license)](https://packagist.org/packages/8ctopus/pdo-wrap)
-[![PHP Version Require](http://poser.pugx.org/8ctopus/pdo-wrap/require/php)](https://packagist.org/packages/8ctopus/pdo-wrap)
+[![Latest Stable Version](http://poser.pugx.org/8ctopus/pdo-bind/v)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![Total Downloads](http://poser.pugx.org/8ctopus/pdo-bind/downloads)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![License](http://poser.pugx.org/8ctopus/pdo-bind/license)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![PHP Version Require](http://poser.pugx.org/8ctopus/pdo-bind/require/php)](https://packagist.org/packages/8ctopus/pdo-bind)
 -->
 
 A simple PDO helper that automatically binds parameters that turns this:
@@ -82,14 +82,14 @@ Since the package is not published on packagist, you need to add the repository 
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/8ctopus/pdo-wrap"
+            "url": "https://github.com/8ctopus/pdo-bind"
         }
     ],
 }
 ```
 
 ```sh
-composer require 8ctopus/pdo-wrap
+composer require 8ctopus/pdo-bind
 ```
 
 ## tests

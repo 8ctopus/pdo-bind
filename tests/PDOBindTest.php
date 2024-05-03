@@ -5,35 +5,35 @@ declare(strict_types=1);
 namespace Tests;
 
 use DateTime;
-use Oct8pus\PDOWrap\Date;
-use Oct8pus\PDOWrap\PDOWrap;
+use Oct8pus\PDOBind\Date;
+use Oct8pus\PDOBind\PDOBind;
 use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  *
- * @covers \Oct8pus\PDOWrap\PDOStatementWrap
- * @covers \Oct8pus\PDOWrap\PDOWrap
+ * @covers \Oct8pus\PDOBind\PDOStatementBind
+ * @covers \Oct8pus\PDOBind\PDOBind
  */
-final class PDOWrapTest extends TestCase
+final class PDOBindTest extends TestCase
 {
-    private static PDOWrap $db;
+    private static PDOBind $db;
 
     public static function setUpBeforeClass() : void {}
 
     public function testConstructor() : void
     {
-        $db = new PDOWrap(new PDO(...Database::get()));
+        $db = new PDOBind(new PDO(...Database::get()));
 
-        self::assertInstanceOf(PDOWrap::class, $db);
+        self::assertInstanceOf(PDOBind::class, $db);
     }
 
     public function testFactory() : void
     {
-        self::$db = PDOWrap::factory(...Database::get());
+        self::$db = PDOBind::factory(...Database::get());
 
-        self::assertInstanceOf(PDOWrap::class, self::$db);
+        self::assertInstanceOf(PDOBind::class, self::$db);
     }
 
     public function testDatabaseExec() : void

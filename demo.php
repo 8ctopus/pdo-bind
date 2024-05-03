@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use NunoMaduro\Collision\Provider;
-use Oct8pus\PDOWrap\Date;
-use Oct8pus\PDOWrap\PDOWrap;
+use Oct8pus\PDOBind\Date;
+use Oct8pus\PDOBind\PDOBind;
 use Tests\Database;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -31,7 +31,7 @@ $database[] = [
     PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
-$db = PDOWrap::factory(...$database);
+$db = PDOBind::factory(...$database);
 
 $sql = <<<'SQL'
 DROP TABLE IF EXISTS `test`

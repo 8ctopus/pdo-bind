@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Oct8pus\PDOWrap;
+namespace Oct8pus\PDOBind;
 
 use PDO;
 
-class PDOWrap
+class PDOBind
 {
     private readonly PDO $db;
 
@@ -54,9 +54,9 @@ class PDOWrap
      * @param string       $query
      * @param array<mixed> $options
      *
-     * @return false|PDOStatementWrap
+     * @return false|PDOStatementBind
      */
-    public function prepare(string $query, array $options = []) : false|PDOStatementWrap
+    public function prepare(string $query, array $options = []) : false|PDOStatementBind
     {
         $result = $this->db->prepare($query, $options);
 
@@ -66,7 +66,7 @@ class PDOWrap
             // @codeCoverageIgnoreEnd
         }
 
-        return new PDOStatementWrap($result);
+        return new PDOStatementBind($result);
     }
 
     /**
@@ -75,9 +75,9 @@ class PDOWrap
      * @param string $query
      * @param mixed  $vars
      *
-     * @return false|PDOStatementWrap
+     * @return false|PDOStatementBind
      */
-    public function query(string $query, mixed ...$vars) : false|PDOStatementWrap
+    public function query(string $query, mixed ...$vars) : false|PDOStatementBind
     {
         $result = $this->db->query($query, ...$vars);
 
@@ -87,6 +87,6 @@ class PDOWrap
             // @codeCoverageIgnoreEnd
         }
 
-        return new PDOStatementWrap($result);
+        return new PDOStatementBind($result);
     }
 }

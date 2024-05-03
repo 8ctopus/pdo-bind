@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Oct8pus\PDOWrap;
+namespace Oct8pus\PDOBind;
 
 use DateTime;
 use Exception;
 use PDO;
 use PDOStatement;
 
-class PDOStatementWrap
+class PDOStatementBind
 {
     private readonly PDOStatement $statement;
 
