@@ -117,4 +117,43 @@ final class PDOWrapTest extends TestCase
             ],
         ], $result);
     }
+
+    public function testDates() : void
+    {
+        $sql = <<<'SQL'
+        SELECT
+            `birthday`, `name`, `salary`, `boss`
+        FROM
+            `test`
+        WHERE
+            `birthday` BETWEEN :from AND :to
+        SQL;
+
+        $query = self::$db->prepare($sql);
+        $query->execute([
+            'from' => new PDODate('1995-05-01'),
+            'to' => new PDODate('1995-05-01'),
+        ]);
+
+        $row = $query->fetch();
+
+        $expected = [
+            'birthday' => '1995-05-01',
+            'name' => 'Sharon',
+            'salary' => 200,
+            'boss' => 1,
+        ];
+
+        self::assertSame($expected, $row);
+
+        $query = self::$db->prepare($sql);
+        $query->execute([
+            'from' => new DateTime('1995-05-01'),
+            'to' => new DateTime('1995-05-01'),
+        ]);
+
+        $row = $query->fetch();
+
+        self::assertSame(false, $row);
+    }
 }
