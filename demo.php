@@ -41,7 +41,7 @@ CREATE TABLE `test` (
 )
 SQL;
 
-$query = $db->prepare($sql, [], true);
+$query = $db->prepare($sql);
 $query->execute();
 
 $sql = <<<'SQL'
@@ -51,7 +51,7 @@ VALUES
     (:birthday, :name, :salary, :boss)
 SQL;
 
-$query = $db->prepare($sql, [], true);
+$query = $db->prepare($sql);
 
 $staff = [
     [
@@ -85,14 +85,14 @@ FROM
     `test`
 SQL;
 
-$query = $db->prepare($sql, [], true);
+$query = $db->prepare($sql);
 $query->execute();
 
 while ($row = $query->fetch()) {
     echo "{$row['id']} {$row['birthday']} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
 
-$query = $db->prepare($sql, [], true);
+$query = $db->prepare($sql);
 $query->execute();
 
 $rows = $query->fetchAll();
@@ -101,7 +101,7 @@ foreach ($rows as $row) {
     echo "{$row['id']} {$row['birthday']} {$row['name']} {$row['salary']} {$row['boss']}\n";
 }
 
-$query = $db->prepare($sql, [], true);
+$query = $db->prepare($sql);
 $query->execute();
 
 $birthday = $query->fetchColumn(1);
