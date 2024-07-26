@@ -1,10 +1,10 @@
 # PDOBind
 
 <!---
-[![Latest Stable Version](http://poser.pugx.org/8ctopus/pdo-bind/v)](https://packagist.org/packages/8ctopus/pdo-bind)
-[![Total Downloads](http://poser.pugx.org/8ctopus/pdo-bind/downloads)](https://packagist.org/packages/8ctopus/pdo-bind)
-[![License](http://poser.pugx.org/8ctopus/pdo-bind/license)](https://packagist.org/packages/8ctopus/pdo-bind)
-[![PHP Version Require](http://poser.pugx.org/8ctopus/pdo-bind/require/php)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![Latest Stable Version](https://poser.pugx.org/8ctopus/pdo-bind/v)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![Total Downloads](https://poser.pugx.org/8ctopus/pdo-bind/downloads)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![License](https://poser.pugx.org/8ctopus/pdo-bind/license)](https://packagist.org/packages/8ctopus/pdo-bind)
+[![PHP Version Require](https://poser.pugx.org/8ctopus/pdo-bind/require/php)](https://packagist.org/packages/8ctopus/pdo-bind)
 -->
 
 A simple PDO helper that automatically binds parameters that turns this:
